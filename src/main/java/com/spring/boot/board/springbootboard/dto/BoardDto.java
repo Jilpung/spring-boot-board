@@ -31,14 +31,12 @@ public class BoardDto {
     }
 
     @Builder
-    public BoardDto(Long id, String title, String content, String writer, Long view, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    public BoardDto(Long id, String title, String content, String writer, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.writer = writer;
-        this.view = view;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
     }
-
 }
