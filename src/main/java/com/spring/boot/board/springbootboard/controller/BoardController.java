@@ -2,7 +2,6 @@ package com.spring.boot.board.springbootboard.controller;
 
 import com.spring.boot.board.springbootboard.dto.BoardDto;
 import com.spring.boot.board.springbootboard.service.BoardService;
-import lombok.Getter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

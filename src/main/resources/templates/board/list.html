@@ -15,34 +15,30 @@
 <a th:href="@{/post}">글쓰기</a>
 <table class="table">
     <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">제목</th>
-        <th scope="col">닉네임</th>
-        <th scope="col">작성일</th>
-        <th scope="col">조회수</th>
-    </tr>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">제목</th>
+            <th scope="col">닉네임</th>
+            <th scope="col">작성일</th>
+        </tr>
     </thead>
     <tbody>
-    <tr th:each="boardDto : ${boardList}">
-        <td>
-            <span th:text="${boardDto.id}"></span>
-        </td>
-        <td>
-            <a th:href="@{'/post/' + ${boardDto.id}}">
-                <span th:text="${boardDto.title}"></span>
-            </a>
-        </td>
-        <td>
-            <span th:text="${boardDto.writer}"></span>
-        </td>
-        <td>
-            <span th:text="${#temporals.format(boardDto.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
-        </td>
-        <td>
-            <span th:text="{boardDto.view}"></span>
-        </td>
-    </tr>
+        <tr th:each="board : ${boardList}">
+            <td>
+                <span th:text="${board.id}"></span>
+            </td>
+            <td>
+                <a th:href="@{'/post/' + ${board.id}}">
+                    <span th:text="${board.title}"></span>
+                </a>
+            </td>
+            <td>
+                <span th:text="${board.writer}"></span>
+            </td>
+            <td>
+                <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+            </td>
+        </tr>
     </tbody>
 </table>
 <div>

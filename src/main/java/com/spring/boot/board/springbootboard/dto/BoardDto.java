@@ -3,7 +3,6 @@ package com.spring.boot.board.springbootboard.dto;
 import com.spring.boot.board.springbootboard.domain.entity.BoardEntity;
 import lombok.*;
 
-import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 @Getter
@@ -25,7 +24,6 @@ public class BoardDto {
                 .title(title)
                 .content(content)
                 .writer(writer)
-                .view(view)
                 .build();
         return boardEntity;
     }
