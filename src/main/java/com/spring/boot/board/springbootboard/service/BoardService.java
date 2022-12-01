@@ -79,6 +79,7 @@ public class BoardService {
                 .id(boardEntity.getId())
                 .title(boardEntity.getTitle())
                 .writer(boardEntity.getWriter())
+                .content(boardEntity.getContent())
                 .createdDate(boardEntity.getCreatedDate())
                 .build();
         return boardDto;
