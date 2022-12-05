@@ -57,4 +57,26 @@ public class UserService implements UserDetailsService {
         return new User(userEntity.getEmail(), userEntity.getPassword(), authorities);
     }
 
+    @Transactional
+    public void checkUsernameDuplication(UserDto userDto) {
+        boolean usernameDuplicate = userRepository.existsByUsername(userDto.toEntity().getUsername());
+        if(usernameDuplicate) {
+            throw new IllegalStateException("이미 존재하는 이름입니다.");
+        }
+    }
+    @Transactional
+    public void checkNicknameDuplication(UserDto userDto) {
+        boolean nicknameDuplicate = userRepository.existsByNickname(userDto.toEntity().getNickname());
+        if(nicknameDuplicate) {
+            throw new IllegalStateException("이미 존재하는 닉네임입니다.");
+        }
+    }
+    @Transactional
+    public void checkEmailDuplication(UserDto userDto) {
+        boolean emailDuplicate = userRepository.existsByEmail(userDto.toEntity().getEmail());
+        if(emailDuplicate) {
+            throw new IllegalStateException("이미 존재하는 email 입니다.");
+        }
+    }
+
 }

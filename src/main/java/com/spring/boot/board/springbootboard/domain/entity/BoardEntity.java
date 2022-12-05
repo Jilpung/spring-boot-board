@@ -19,10 +19,11 @@ public class BoardEntity extends TimeEntity {
     private String content;
     @Column(length = 20, nullable = false)
     private String writer;
-    private Long view;
+    @Column(columnDefinition = "integer default 0", nullable = false)
+    private int view;
 
     @Builder
-    public BoardEntity(Long id, String title, String content, String writer, Long view) {
+    public BoardEntity(Long id, String title, String content, String writer, int view) {
         this.id = id;
         this.title = title;
         this.content = content;

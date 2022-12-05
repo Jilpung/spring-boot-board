@@ -111,4 +111,9 @@ public class BoardService {
                 .createdDate(boardEntity.getCreatedDate())
                 .build();
     }
+
+    @Transactional
+    public int updateView(Long id) {
+        return BoardRepository.updateView(id);
+    }
 }

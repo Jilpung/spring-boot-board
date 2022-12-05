@@ -33,16 +33,21 @@ public class UserController {
     @PostMapping("/auth/signup")
     public String execSignup(@Valid UserDto userDto, Errors errors, Model model) {
         if(errors.hasErrors()){
+            // 회원가입 실패시, 입력 데이터를 유지
             model.addAttribute("userDto", userDto);
 
+            // 유효성 통과 못한 필드와 메시지를 핸들링
             Map<String, String> validatorResult = userService.validateHandling(errors);
             for(String key : validatorResult.keySet()){
                 model.addAttribute(key, validatorResult.get(key));
             }
             return "user/signup";
         }
-        userService.joinUser(userDto);
+        userService.checkUsernameDuplication(userDto);
+        userService.checkNicknameDuplication(userDto);
+        userService.checkEmailDuplication(userDto);
 
+        userService.joinUser(userDto);
         return "redirect:/auth/login";
     }
     @GetMapping("/auth/login")
@@ -72,6 +77,5 @@ public class UserController {
     public String admin() {
         return "user/admin";
     }
-
 
 }

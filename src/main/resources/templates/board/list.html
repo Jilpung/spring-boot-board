@@ -18,6 +18,7 @@
             <th scope="col">제목</th>
             <th scope="col">닉네임</th>
             <th scope="col">작성일</th>
+            <th scope="col">조회수</th>
         </tr>
     </thead>
     <tbody>
@@ -35,6 +36,9 @@
             </td>
             <td>
                 <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+            </td>
+            <td>
+                <span th:number="${board.view}"></span>
             </td>
         </tr>
     </tbody>

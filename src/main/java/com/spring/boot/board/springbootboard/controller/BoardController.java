@@ -1,5 +1,7 @@
 package com.spring.boot.board.springbootboard.controller;
 
+import com.spring.boot.board.springbootboard.domain.entity.BoardEntity;
+import com.spring.boot.board.springbootboard.domain.repository.BoardRepository;
 import com.spring.boot.board.springbootboard.dto.BoardDto;
 import com.spring.boot.board.springbootboard.service.BoardService;
 import org.springframework.stereotype.Controller;
@@ -7,11 +9,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class BoardController {
 
     private BoardService boardService;
+    private BoardRepository boardRepository;
 
     public BoardController(BoardService boardService) {
         this.boardService = boardService;
@@ -68,5 +72,14 @@ public class BoardController {
         List<BoardDto> boardDtoList = boardService.searchPosts(keyword);
         model.addAttribute("boardList", boardDtoList);
         return "board/list.html";
+    }
+
+    @GetMapping("/post/read/{id}")
+    public String read(@PathVariable Long id, Model model) {
+        Optional<BoardEntity> boardEntity = boardRepository.findById(id);
+        boardService.updateView(id);
+        model.addAttribute("board", boardEntity);
+        return "board-read";
+
     }
 }
