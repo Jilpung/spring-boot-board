@@ -1,8 +1,8 @@
 package com.spring.boot.board.springbootboard.common.jwt;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import lombok.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -12,6 +12,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
+
 
 import java.security.Key;
 import java.util.Arrays;
@@ -24,31 +26,34 @@ import java.util.stream.Collectors;
 public class TokenProvider implements InitializingBean {
     private final Logger LOGGER = LoggerFactory.getLogger(TokenProvider.class);
 
-    private static final String AUTHORITIES_KEY = "NeighborAPI";
+    private static final String AUTHORITIES_KEY = "auth";
 
     private final String secret;
     private final long tokenValidityInMilliseconds;
     private Key key;
 
-    public TokenProvider(@Value("${jwt.secret}") String secret,
-                         @Value("${jwt.token-validity-in-seconds}") long tokenValidityInMilliseconds){
+    public TokenProvider(
+            @Value("${jwt.secret}") String secret,
+            @Value("${jwt.token-validity-in-seconds}") long tokenValidityInMilliseconds) {
         this.secret = secret;
-        this.tokenValidityInMilliseconds = tokenValidityInMilliseconds;
+        this.tokenValidityInMilliseconds = tokenValidityInMilliseconds * 1000;
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
-        byte[] keyBytes = Base64.getDecoder().decode(secret);
+    public void afterPropertiesSet() {
+        byte[] keyBytes = Decoders.BASE64.decode(secret);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    /**token 생성 algorithm */
-    public String createToken(Authentication authentication){
+    /**
+     * token 생성 매소드
+     */
+    public String createToken(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
         long now = (new Date()).getTime();
-        Date validity = new Date(now + this.tokenValidityInMilliseconds);
+        Date validity = new Date(now + this.tokenValidityInMilliseconds); //token 만료기간
 
         return Jwts.builder()
                 .setSubject(authentication.getName())
@@ -58,9 +63,12 @@ public class TokenProvider implements InitializingBean {
                 .compact();
     }
 
-    /**인증 정보 조회 */
+    /**
+     * 인증 정보 조회
+     */
     public Authentication getAuthentication(String token) {
-        Claims claims = Jwts.parserBuilder()
+        Claims claims = Jwts
+                .parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token)
@@ -69,23 +77,25 @@ public class TokenProvider implements InitializingBean {
                 Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
-        User principal =new User(claims.getSubject(), "", authorities);
+        User principal = new User(claims.getSubject(), "", authorities);
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
 
 
-    /**token 유효성 검증 */
-    public boolean validateToken(String token){
-        try{
+    /**
+     * token 유효성 검증
+     */
+    public boolean validateToken(String token) {
+        try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
-        }catch(io.jsonwebtoken.security.SecurityException | MalformedJwtException e){
+        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             LOGGER.info("잘못된 JWT 서명입니다.");
-        }catch(ExpiredJwtException e){
+        } catch (ExpiredJwtException e) {
             LOGGER.info("만료된 JWT 토큰입니다.");
-        }catch(UnsupportedJwtException e){
+        } catch (UnsupportedJwtException e) {
             LOGGER.info("지원하지 않는 JWT 토큰입니다.");
-        }catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             LOGGER.info("JWT 토큰이 잘못되었습니다.");
         }
         return false;

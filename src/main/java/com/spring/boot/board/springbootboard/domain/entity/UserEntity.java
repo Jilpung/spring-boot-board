@@ -24,10 +24,18 @@ public class UserEntity extends TimeEntity {
     private String password;
     @Column(nullable = false)
     private String nickname;
-//    @Enumerated(EnumType.STRING)
-//    @Column(nullable = true)
-//    private Role role;
-//    private boolean activated;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
+    private Role role;
+    private boolean activated;
+
+//    @ManyToMany
+//    @JoinTable(
+//            name = "user_authority",
+//            joinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")}
+//    )
+//    private Set<AuthorityEntity> authorities;
     @Builder
     public UserEntity(Long id, String email, String username, String password, String nickname){
         this.id = id;

@@ -1,5 +1,9 @@
 package com.spring.boot.board.springbootboard.config;
 
+import com.spring.boot.board.springbootboard.common.jwt.JwtAccessDeniedHandler;
+import com.spring.boot.board.springbootboard.common.jwt.JwtAuthenticationEntryPoint;
+import com.spring.boot.board.springbootboard.common.jwt.JwtSecurityConfig;
+import com.spring.boot.board.springbootboard.common.jwt.TokenProvider;
 import com.spring.boot.board.springbootboard.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -14,14 +19,30 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.filter.CorsFilter;
 
-@Configuration
 @EnableWebSecurity
-@AllArgsConstructor
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     private UserService userService;
+    private TokenProvider tokenProvider;
+    private CorsFilter corsFilter;
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
+    public SecurityConfig(
+            TokenProvider tokenProvider,
+            CorsFilter corsFilter,
+            JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
+            JwtAccessDeniedHandler jwtAccessDeniedHandler
+    ) {
+        this.tokenProvider = tokenProvider;
+        this.corsFilter = corsFilter;
+        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
+        this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
+    }
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -37,38 +58,42 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf().disable()
+                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+                /**세션 사용하지 않음*/
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-                /**401, 403 Exception 핸들링 */
+                .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)
 
-                /**세션 사용하지 않음*/
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-
-                /**JwtSecurityConfig 적용 */
-                .and()
-                .apply(new JwtSecurityConfig(tokenProcider))
                 .and()
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/auth/info").hasRole("ADMIN")
                 .antMatchers("/auth/info").hasRole("USER")
                 .antMatchers("/**").permitAll()
+                .anyRequest().authenticated()
+
                 .and()
                 .formLogin()
                 .loginPage("/auth/login")
                 .defaultSuccessUrl("/auth/login/result")
                 .permitAll()
+
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
                 .logoutSuccessUrl("/auth/logout/result")
                 .invalidateHttpSession(true)
+
                 .and()
-                .exceptionHandling().accessDeniedPage("/auth/denied");
+                .exceptionHandling().accessDeniedPage("/auth/denied")
+
+                .and()
+                .apply(new JwtSecurityConfig(tokenProvider));
+
         return httpSecurity.build();
     }
 
