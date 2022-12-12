@@ -7,7 +7,6 @@
 //@Entity
 //@Getter
 //@Setter
-//@AllArgsConstructor
 //@NoArgsConstructor
 //@Builder
 //@Table(name = "authority")
@@ -16,4 +15,9 @@
 //    @Id
 //    @Column(name = "authority_name", length = 50)
 //    private String authorityName;
+//
+//    @Builder
+//    public AuthorityEntity(String authorityName) {
+//        this.authorityName = authorityName;
+//    }
 //}

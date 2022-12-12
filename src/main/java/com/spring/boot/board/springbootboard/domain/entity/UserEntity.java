@@ -25,9 +25,6 @@ public class UserEntity extends TimeEntity {
     @Column(nullable = false)
     private String nickname;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = true)
-    private Role role;
     private boolean activated;
 
 //    @ManyToMany
