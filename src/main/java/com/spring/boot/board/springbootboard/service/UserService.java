@@ -35,7 +35,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public Long joinUser(UserDto userDto) {
+    public Long signup(UserDto userDto) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
