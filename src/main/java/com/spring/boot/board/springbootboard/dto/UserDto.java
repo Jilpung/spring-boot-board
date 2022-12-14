@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class UserDto {
     private Long id;
     @NotBlank(message = "이메일은 필수 입력 값입니다.")
-    @Email(message = "이메일 형식에 맞지 않습니다.")
+    @Pattern(regexp = "^(?:\\w+\\.?)*\\w+@(?:\\w+\\.)+\\w+$", message = "이메일 형식이 올바르지 않습니다.")
     private String email;
     @NotBlank(message = "비밀번호는 필수 입력 값입니다.")
     @Pattern(regexp="(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,20}",
@@ -23,7 +23,7 @@ public class UserDto {
     private String password;
     @NotBlank(message = "이름은 필수 입력 값입니다.")
     private String username;
-    @NotBlank(message = "닉네임은 필수 입력 값입니다.")
+    @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9-_]{2,10}$", message = "닉네임은 특수문자를 제외한 2~10자리여야 합니다.")
     private String nickname;
 
     private LocalDateTime createdDate;
