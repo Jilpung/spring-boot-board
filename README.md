@@ -8,15 +8,11 @@
   - 사용기술
     - 백엔드
     - 프론트엔드
-  - 실행화면
 
 - 구조 및 설계
-  - 패키지 구조
   - DB 설계
-  ![DBarchitecture](./img/DBarchitecture.png)
   - API 설계
 
-- 개발내용
 - 후기
 
 
@@ -30,5 +26,21 @@ Bootstrap과 thymeleaf를 사용해서 프론트를 간단히 제작.
 **댓글:** CRUD  
 
 **미구현:** jwt, 권한별(USER, ADMIN)접속 가능 여부  
+
+### 3. 사용기술
+####백엔드
+ - JAVA, Spring boot, jpa, mysql  
+####프론트엔드
+ - Bootstrap, thymeleaf
+
+### 4. 구조 및 설계
+ - DB 설계
+![DBarchitecture](./img/DBarchitecture.png)
+
+ - API 설계
+ 
+### 5. 후기
+
+
 
 /2023.1.3
