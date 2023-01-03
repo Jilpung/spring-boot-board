@@ -28,9 +28,9 @@ Bootstrap과 thymeleaf를 사용해서 프론트를 간단히 제작.
 **미구현:** jwt, 권한별(USER, ADMIN)접속 가능 여부  
 
 ### 3. 사용기술
-####백엔드
+#### 백엔드
  - JAVA, Spring boot, jpa, mysql  
-####프론트엔드
+#### 프론트엔드
  - Bootstrap, thymeleaf
 
 ### 4. 구조 및 설계
