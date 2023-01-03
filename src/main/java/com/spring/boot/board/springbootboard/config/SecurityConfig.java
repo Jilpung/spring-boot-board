@@ -70,6 +70,7 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeRequests()
+// 권한별 수정 필요
                 .antMatchers("/admin/**", "/auth/info").hasRole("ADMIN")
                 .antMatchers("/auth/info").hasRole("USER")
                 .antMatchers("/**").permitAll()
