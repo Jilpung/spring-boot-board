@@ -13,7 +13,9 @@
   - DB 설계
   - API 설계
 
-- 후기
+- 마치며
+  - 보완사항
+  - 후기
 
 
 ## 들어가며
@@ -29,18 +31,21 @@ Bootstrap과 thymeleaf를 사용해서 프론트를 간단히 제작.
 
 ### 3. 사용기술
 #### 백엔드
- - JAVA, Spring boot, jpa, mysql  
+  - JAVA11, SpringBoot, JPA(Spring Data JPA), Spring Security, Gradle, mysql  
 #### 프론트엔드
- - Bootstrap, thymeleaf
+  - Html/Css, Javascript, Bootstrap, thymeleaf
 
 ### 4. 구조 및 설계
- - DB 설계
+  - DB 설계
 ![DBarchitecture](./img/DBarchitecture.png)
 
- - API 설계
+  - API 설계
  
-### 5. 후기
+### 5. 마치며
+  - #### 보완사항
 
+
+  - ##### 후기
 
 
 /2023.1.3
