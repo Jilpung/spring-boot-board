@@ -13,7 +13,7 @@
 - 구조 및 설계
   - 패키지 구조
   - DB 설계
-  ![DBarchitecture](//Users/test/Desktop/DBarchitecture)
+  ![DBarchitecture](./img/DBarchitecture)
   - API 설계
 
 - 개발내용
