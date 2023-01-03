@@ -1,9 +1,9 @@
 package com.spring.boot.board.springbootboard.config;
 
-import com.spring.boot.board.springbootboard.common.jwt.JwtAccessDeniedHandler;
-import com.spring.boot.board.springbootboard.common.jwt.JwtAuthenticationEntryPoint;
-import com.spring.boot.board.springbootboard.common.jwt.JwtSecurityConfig;
-import com.spring.boot.board.springbootboard.common.jwt.TokenProvider;
+//import com.spring.boot.board.springbootboard.common.jwt.JwtAccessDeniedHandler;
+//import com.spring.boot.board.springbootboard.common.jwt.JwtAuthenticationEntryPoint;
+//import com.spring.boot.board.springbootboard.common.jwt.JwtSecurityConfig;
+//import com.spring.boot.board.springbootboard.common.jwt.TokenProvider;
 import com.spring.boot.board.springbootboard.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -27,21 +27,21 @@ import org.springframework.web.filter.CorsFilter;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     private UserService userService;
-    private TokenProvider tokenProvider;
+//    private TokenProvider tokenProvider;
     private CorsFilter corsFilter;
-    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    private JwtAccessDeniedHandler jwtAccessDeniedHandler;
+//    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+//    private JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     public SecurityConfig(
-            TokenProvider tokenProvider,
-            CorsFilter corsFilter,
-            JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
-            JwtAccessDeniedHandler jwtAccessDeniedHandler
+//            TokenProvider tokenProvider,
+            CorsFilter corsFilter
+//            JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
+//            JwtAccessDeniedHandler jwtAccessDeniedHandler
     ) {
-        this.tokenProvider = tokenProvider;
+//        this.tokenProvider = tokenProvider;
         this.corsFilter = corsFilter;
-        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
-        this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
+//        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
+//        this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
     }
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -65,13 +65,13 @@ public class SecurityConfig {
 
                 .and()
                 .exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .accessDeniedHandler(jwtAccessDeniedHandler)
+//                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+//                .accessDeniedHandler(jwtAccessDeniedHandler)
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/admin/**", "/auth/info", "/post", "/post/{id}").hasRole("ADMIN")
-                .antMatchers("/auth/info", "/post", "/post/{id}").hasRole("USER")
+                .antMatchers("/admin/**", "/auth/info").hasRole("ADMIN")
+                .antMatchers("/auth/info").hasRole("USER")
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
 
@@ -88,10 +88,10 @@ public class SecurityConfig {
                 .invalidateHttpSession(true)
 
                 .and()
-                .exceptionHandling().accessDeniedPage("/auth/denied")
+                .exceptionHandling().accessDeniedPage("/auth/denied");
 
-                .and()
-                .apply(new JwtSecurityConfig(tokenProvider));
+//                .and();
+//                .apply(new JwtSecurityConfig(tokenProvider));
 
         return httpSecurity.build();
     }
