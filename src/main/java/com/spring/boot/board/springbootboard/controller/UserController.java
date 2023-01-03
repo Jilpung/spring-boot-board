@@ -47,7 +47,7 @@ public class UserController {
         userService.checkNicknameDuplication(userDto);
         userService.checkEmailDuplication(userDto);
 
-        userService.joinUser(userDto);
+        userService.signup(userDto);
         return "redirect:/auth/login";
     }
     @GetMapping("/auth/login")
