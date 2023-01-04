@@ -36,13 +36,14 @@ Bootstrap과 thymeleaf를 사용해서 프론트를 간단히 제작.
   - Html/Css, Javascript, Bootstrap, thymeleaf
 
 ### 4. 구조 및 설계
-  - DB 설계
+<details>
+  <summary>#### DB 설계</summary>
 ![DBarchitecture](./img/DBarchitecture.png)
 
-  - API 설계
+  <summary>#### API 설계</summary>
 ![boardAPI](./img/boardAPI.png)
 ![userAPI](./img/userAPI.png)
-
+</details>
 ### 5. 마치며
   - #### 보완사항
     1. 로그인 한 사람만 글쓰기 가능
