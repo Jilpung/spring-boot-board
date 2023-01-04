@@ -47,8 +47,8 @@ Bootstrap과 thymeleaf를 사용해서 프론트를 간단히 제작.
   
   <summary>API 설계</summary>
   
-    ![boardAPI](./img/boardAPI.png)  
-    ![userAPI](./img/userAPI.png)   
+![boardAPI](./img/boardAPI.png)
+![userAPI](./img/userAPI.png)
   </details>
   <br />
   
