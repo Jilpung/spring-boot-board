@@ -39,15 +39,16 @@ Bootstrap과 thymeleaf를 사용해서 프론트를 간단히 제작.
   <details>
     <summary>DB 설계</summary>
     
-    ![DBarchitecture](./img/DBarchitecture.png)
+![DBarchitecture](./img/DBarchitecture.png)  
+  
   </details>
   <br />
   <details>
   
   <summary>API 설계</summary>
   
-    ![boardAPI](./img/boardAPI.png)
-    ![userAPI](./img/userAPI.png)
+    ![boardAPI](./img/boardAPI.png)  
+    ![userAPI](./img/userAPI.png)   
   </details>
   <br />
   
