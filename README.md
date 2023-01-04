@@ -8,16 +8,14 @@
   - 사용기술
     - 백엔드
     - 프론트엔드
-  - 실행화면
 
 - 구조 및 설계
-  - 패키지 구조
   - DB 설계
-  ![DBarchitecture](./img/DBarchitecture.png)
   - API 설계
 
-- 개발내용
-- 후기
+- 마치며
+  - 보완사항
+  - 후기
 
 
 ## 들어가며
@@ -29,6 +27,29 @@ Bootstrap과 thymeleaf를 사용해서 프론트를 간단히 제작.
 **사용자:** Security, jwt 회원가입 및 로그인, 회원정보 수정, 회원가입시 유효성 검사 및 중복 검사  
 **댓글:** CRUD  
 
-**미구현:** jwt, 권한별(USER, ADMIN)접속 가능 여부  
+**미구현:** jwt, 권한별(USER, ADMIN)접속 가능 여부, 댓글
+
+### 3. 사용기술
+#### 백엔드
+  - JAVA11, SpringBoot, JPA(Spring Data JPA), Spring Security, Gradle, mysql  
+#### 프론트엔드
+  - Html/Css, Javascript, Bootstrap, thymeleaf
+
+### 4. 구조 및 설계
+  - DB 설계
+![DBarchitecture](./img/DBarchitecture.png)
+
+  - API 설계
+ 
+### 5. 마치며
+  - #### 보완사항
+    1. 로그인 한 사람만 글쓰기 가능
+    2. 작성자, 관리자만 글 수정, 삭제 가능하게 하기
+    3. 글 삭제시 글 번호 재 정렬
+    4. 페이징 처리 정확히(1페이지 글 10개씩)
+
+
+  - ##### 후기
+
 
 /2023.1.3
