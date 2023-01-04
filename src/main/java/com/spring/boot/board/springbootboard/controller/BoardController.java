@@ -80,6 +80,5 @@ public class BoardController {
         boardService.updateView(id);
         model.addAttribute("board", boardEntity);
         return "board-read";
-
     }
 }
